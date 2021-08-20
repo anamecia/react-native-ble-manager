@@ -681,6 +681,15 @@ class BleManager extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
+    public void addService(String uuid, Boolean primary) {
+        UUID SERVICE_UUID = UUID.fromString(uuid);
+        int type = primary ? BluetoothGattService.SERVICE_TYPE_PRIMARY : BluetoothGattService.SERVICE_TYPE_SECONDARY;
+        BluetoothGattService tempService = new BluetoothGattService(SERVICE_UUID, type);
+        if(!this.servicesMap.containsKey(uuid))
+            this.servicesMap.put(uuid, tempService);
+    }
+
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes) {
